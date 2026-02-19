@@ -1,4 +1,45 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {"gradle": "latest"}
+  "name": "tensy-android",
+  "image": "mcr.microsoft.com/devcontainers/android:1",
+  "features": {
+    "ghcr.io/devcontainers/features/gradle:latest": {},
+    "ghcr.io/devcontainers/features/java:latest": {
+      "version": "17"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "android.vscode-android-webview-devtools",
+        "cmderq.cmake",
+        "ms-vscode.cmake-tools",
+        "gradle.gradle-for-java",
+        "ms-vscode.cpptools"
+      ],
+      "settings": {
+        "cmake.sourceDirectory": "${workspaceFolder}",
+        "cmake.buildDirectory": "${workspaceFolder}/build"
+      }
+    }
+  },
+  "remoteEnv": {
+    "ANDROID_SDK_ROOT": "/home/vscode/android-sdk",
+    "ANDROID_HOME": "/home/vscode/android-sdk",
+    "ANDROID_NDK_ROOT": "/home/vscode/android-sdk/ndk/26.1.10909125"
+  },
+  "postCreateCommand": "bash .devcontainer/setup-android.sh",
+  "mounts": [
+    "source=${localEnv:HOME}/.android,target=/home/vscode/.android,type=bind,consistency=cached"
+  ],
+  "forwardPorts": [8080, 5037],
+  "portsAttributes": {
+    "5037": {
+      "label": "ADB Server",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Development Server",
+      "onAutoForward": "notify"
+    }
+  }
 }
