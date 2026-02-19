@@ -1,10 +1,10 @@
 
-set(DEP_SDL_VER "7d27ca282eb1ca85bdfd20d4e19227c63a3f122c")
+set(DEP_SDL_VER "ac3afa1f385518712ca58d818a58384d2cc3d683")
 download_dep_tarball(
 	"SDL"
 	"${DEP_SDL_VER}"
 	"https://github.com/libsdl-org/SDL/archive/${DEP_SDL_VER}.tar.gz"
-	"1f0e4124eedd5bb90554adedfea11d9e9a85888ab7fb03ee5fec8c6a5c878e30"
+	"746d9f7cdf48056bbb577fa87383423b4f15f8159c6988fe2bcc4b62027b4626"
 )
 set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 set(SDL_STATIC ON CACHE BOOL "" FORCE)
@@ -31,6 +31,8 @@ if(HAIKU)
 	add_definitions(-fPIC)
 endif()
 
-add_definitions(-DSDL_LEAN_AND_MEAN=1 -DSDL_HAVE_STB=1)
+if(NOT NINTENDO_3DS)
+	add_definitions(-DSDL_LEAN_AND_MEAN=1 -DSDL_HAVE_STB=1)
+endif()
 
 add_subdirectory(lib/SDL EXCLUDE_FROM_ALL)
